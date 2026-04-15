@@ -1,0 +1,989 @@
+/* --- SPIDER/PARTICLE CANVAS STYLING --- */
+#particleCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    /* Behinds .main (z-index: 1+), in front of .bg (z-index: -1) */
+    z-index: 0; 
+    pointer-events: none; /* Let clicks pass through the 'web' to the buttons */
+}
+
+/* Updated .main to sit above the spider web */
+.main {
+    position: relative;
+    z-index: 10; /* Ensures the login box is above the animation */
+    /* ... keep your other existing .main styles ... */
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* BODY FIX */
+body {
+    margin: 0;
+    height: 100vh;
+    font-family: Arial;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* BACKGROUND LAYER */
+.bg {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+
+    background: linear-gradient(
+        270deg,
+        #0a0f1f,
+        #0f2027,
+        #203a43,
+        #0a0f1f
+    );
+
+    background-size: 600% 600%;
+    animation: gradientMove 12s ease infinite;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+
+/* MAIN CONTAINER (FIXED SIZE) */
+.main {
+    width: 900px;
+    height: 500px;
+    display: flex;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    
+    background: rgba(255, 255, 255, 0.03); 
+    
+    -webkit-backdrop-filter: blur(25px); /* Para sa Safari support */
+    
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+
+    animation: fadeIn 1s ease;
+    position: relative;
+}
+
+.main-login::after{
+  content: "";
+  position: absolute;
+  top: 20%;
+  bottom: 20%;
+  left: 58%;
+  width: 1px;
+  background: rgba(255,255,255,0.08);
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        filter: blur(10px);
+        transform: translateY(40px) scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        filter: blur(0);
+        transform: translateY(0) scale(1);
+    }
+}
+
+.main-container {
+    animation: revealContainer 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+/* LEFT SIDE */
+.left {
+    flex: 1;
+    color: white;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* RIGHT SIDE */
+.right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* LOGIN BOX */
+.login-box {
+    width: 280px;
+    padding: 20px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(20px);
+     border: 1px solid rgba(255,255,255,0.15);
+    margin-top: -10px;
+    
+}
+
+/* INPUT */
+input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    background: rgba(255,255,255,0.1);
+    color: white;
+
+    transition: 0.3s;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+}
+
+
+input:focus {
+    transform: scale(1.02);
+}
+
+/* UPDATED BUTTON WITH TRACKING GLOW */
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    border-radius: 25px;
+    border: none;
+    background: linear-gradient(135deg, #7B4B2A, #FFB347);
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    
+    /* 🔥 IMPORTANT: This keeps the light inside */
+    position: relative;
+    overflow: hidden; 
+
+    backdrop-filter: blur(10px);
+}
+
+/* THE BUTTON SPOTLIGHT LAYER */
+.login-btn::before {
+    content: "";
+    position: absolute;
+    /* We use the coordinates from JS here */
+    top: var(--btn-y);
+    left: var(--btn-x);
+    width: 120px; /* Size of the spotlight */
+    height: 120px;
+    background: radial-gradient(circle, rgba(238, 255, 3, 0.5), transparent 70%);
+    transform: translate(-50%, -50%); /* Centers the light on the cursor */
+    pointer-events: none; /* Let the mouse click 'through' the light */
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s;
+}
+
+/* Show the light only when hovering */
+.login-btn:hover::before {
+    opacity: 1;
+}
+
+.login-btn:hover {
+    transform: scale(1.03);
+}
+
+.login-btn:active {
+    transform: scale(0.98);
+}
+
+/* CLICK EFFECT */
+.login-btn:active {
+    transform: scale(0.97);
+}
+
+/* FLEX FIX */
+.left, .right {
+    min-width: 0;
+}
+
+/* =========================================
+   COMPLETE TEXT & COLOR STYLING
+   ========================================= */
+
+/* 1. "Welcome!" Header */
+.left h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 70px;             /* Massive and impactful */
+    font-weight: 800;                  
+    line-height: 1;
+    letter-spacing: 1px;        /* Tight modern look */
+
+    position: absolute;   /* Removes it from the stack */
+    top: 95px;            /* Distance from the TOP of the glass box */
+    left: 60px;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.059);
+
+    /* 1. Ilagay ang gradient sa background */
+    background: linear-gradient(to right, #ffb247ef, #7B4B2A);
+
+  /* 2. I-clip ang background sa loob lang ng text */
+    -webkit-background-clip: text;
+    background-clip: text;
+
+  /* 3. Gawing transparent ang mismong font color para lumitaw ang background sa likod */
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+
+  /* 4. Siguraduhing inline-block para sakto ang gradient sa haba ng text */
+    display: inline-block;
+  
+}
+
+
+
+/* 2. "Interactive login system" Sub-text */
+.left p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.88); /* Muted white for hierarchy */
+    margin-top: 10px;
+    margin: 0;
+    letter-spacing: 0px;
+    line-height: 1;
+    padding: 0;
+}
+
+/* 3. "Sign in" Header */
+.login-box h2 {
+    font-family: 'Orbitron', sans-serif; /* Techy font */
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff;
+    text-transform: uppercase;
+    margin-bottom: 25px;
+    letter-spacing: 2px;
+    
+}
+
+/* 4. Input Text (What the user types) */
+input {
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    color: #ffffff;             /* Text color when typing */
+}
+
+/* 5. Placeholder Text (The "Username" hint) */
+input::placeholder {
+    color: rgba(255, 255, 255, 0.4); /* Faded hint text */
+    font-size: 14px;
+}
+
+/* 6. Button Text ("Log In") */
+.login-btn {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #ffffff;
+    margin-top: 8px;
+    margin-bottom: 5px;
+}
+
+/* 7. Adjusting Position of the Left Section */
+.left {
+    padding-left: 100px;        /* Move text further from the edge */
+    justify-content: center;    /* Keeps text centered vertically */
+}
+
+/* =========================================
+   NEW: "KILUX" LOGO STYLING
+   ========================================= */
+
+.logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: #ffffff;
+    border-color: #FFB347;
+
+    letter-spacing: 0.5px;
+
+    /* 🔥 THE MAGIC LINES: */
+    position: absolute;   /* Removes it from the stack */
+    top: 30px;            /* Distance from the TOP of the glass box */
+    left: 40px;           /* Distance from the LEFT of the glass box */
+}
+
+.brand {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: #ffffff;
+    border-color: #FFB347;
+
+    letter-spacing: 0.5px;
+
+    /* 🔥 THE MAGIC LINES: */
+    position: absolute;   /* Removes it from the stack */
+    top: 13px;            /* Distance from the TOP of the glass box */
+    left: 40px;           /* Distance from the LEFT of the glass box */
+}
+
+/* --- EYE TOGGLE STYLING --- */
+
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+#toggleEye,
+#signupEye,
+#confirmEye {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+#toggleEye:hover,
+#signupEye:hover,
+#confirmEye:hover {
+    color: #4FC3F7;
+}
+
+#toggleEye:hover {
+    color: #4FC3F7; /* Glow color to match your theme */
+}
+
+/* Fix for the input width inside the wrapper */
+.password-wrapper input {
+    margin-top: 10px;
+    padding-right: 40px; /* Space so text doesn't go under the eye */
+}
+
+
+/* Big Title */
+.login-title-secondary {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 38px;
+    color: white;
+    margin-bottom: 0px; /* Removes gap below title */
+    margin-top: 2.5px;
+    text-transform: uppercase;
+    margin-left: 0px;
+}
+
+.login-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 38px;
+    color: white;
+    margin-bottom: 0px; /* Removes gap below title */
+    margin-top: 2.5px;
+    text-transform: uppercase;
+    margin-left: 50px;
+}
+
+/* Small Subtext */
+.signup-na {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 5px;
+    margin-bottom: 10px; /* Creates space before the input field */
+    margin-left: 26px;
+}
+
+.signup-sub {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 5px;
+    margin-bottom: 10px; /* Creates space before the input field */
+    margin-left: 0px;
+}
+
+/* The Underlined Link */
+.signup-link {
+    color: #FFB347;
+    cursor: pointer;
+    border-bottom: 0.5px solid #FFB347; /* The underline */
+    padding-bottom: 1px;
+    transition: 0.3s;
+    margin-top: 0px;
+}
+
+.signup-link:hover {
+    color: #4FC3F7;
+    border-bottom-color: #4FC3F7;
+}
+  
+
+.typing-container {
+    font-size: 16.5px; /* Clean size for a long sentence */
+    color: rgba(255, 255, 255, 0.8);
+    margin-top: 5px;
+    margin-bottom: 5px;
+    line-height: 1;
+    min-height: 100px; /* Keeps the layout from jumping when text clears */
+    max-width: 265px; /* Prevents the text from stretching too wide */
+
+    
+    position: absolute;   /* Removes it from the stack */
+    top: 215px;            /* Distance from the TOP of the glass box */
+    left: 60px;
+}
+
+/* The blinking cursor */
+.cursor {
+    color: #FFB347;
+    font-weight: bold;
+    animation: blink 0.8s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+
+.signup-link {
+    color: #FFB347;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.signup-link:hover {
+    text-decoration: underline;
+}
+
+.login-box input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+}
+
+
+.ai-container {
+  position: absolute;
+  bottom: 125px;
+  left: 65px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* LOGO */
+.ai-circle {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: #ffb247c1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+}
+
+.ai-circle img {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+}
+
+/* INPUT BOX */
+.ai-input-box {
+  display: flex;
+  align-items: center;
+  
+  width: 150px;
+  height: 32px;
+
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+
+  padding: 3px 10px;
+
+  background: transparent;
+
+  margin-left: -6px; /* Pushes the input box to the right edge of the left section */
+  
+}
+
+/* INPUT */
+.ai-input-box input {
+  flex: 1;
+  border: none;
+  outline: none;
+  
+  background: transparent;
+  color: white;
+  font-size: 12px;
+
+  box-shadow: none;
+  transition: color 0.2s ease;
+  transition: transform 0.15s ease, color 0.15s ease;
+  margin-bottom: 6px;
+}
+
+.ai-input-box button:hover {
+  color: #ffd27f;
+  transform: scale(1.15); /* konting laki lang */
+}
+
+.ai-input-box button:active {
+  transform: scale(0.95); /* lumiit konti pag click */
+}
+
+@keyframes slideInOut {
+  0% { transform: translateX(-60px); opacity: 0; }
+  30% { transform: translateX(0); opacity: 1; }
+  70% { transform: translateX(0); opacity: 1; }
+  100% { transform: translateX(-60px); opacity: 0; }
+}
+
+@keyframes spinLogo {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* textbox hidden + animation */
+.ai-input-box.idle {
+  animation: slideInOut 3s ease-in-out infinite;
+}
+
+/* logo umiikot */
+.ai-circle.idle {
+  animation: spinLogo 2s linear infinite;
+}
+
+/* BUTTON */
+.ai-input-box button {
+  background: none;
+  border: none;
+
+  color: #ffb347;
+  font-size: 14px;
+
+  cursor: pointer;
+  display: none;
+}
+
+.ai-input-box input:focus,
+.ai-input-box input:active,
+.ai-input-box input:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+#sendBtn {
+  display: none; /* walang arrow muna */
+}
+
+.ai-input-box.active {
+  width: 280px; /* hahaba */
+}
+
+.ai-input-box.active #sendBtn {
+  display: block; /* lalabas arrow */
+}
+
+@keyframes slideHint {
+  0% { transform: translateX(-40px); opacity: 0; }
+  50% { transform: translateX(0); opacity: 1; }
+  100% { transform: translateX(-40px); opacity: 0; }
+}
+
+@keyframes spinLogo {
+  from { transform: rotate(0); }
+  to { transform: rotate(360deg); }
+}
+
+.ai-input-box.idle {
+  animation: slideHint 3s ease-in-out infinite;
+}
+
+.ai-circle.idle {
+  animation: spinLogo 3s linear infinite;
+}
+
+.ai-input-box.active button {
+  display: block;
+}
+
+
+.main-signup {
+    backdrop-filter: blur(35px);
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.95);
+    transition: 0.5s;
+}
+
+.main-signup.active {
+    opacity: 1;
+    pointer-events: all;
+    transform: scale(1);
+}
+
+.main-login.hide {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.95);
+    transition: 0.5s;
+}
+
+
+/* =========================
+   SIGNUP CONTAINER FIX
+========================= */
+
+.main-signup {
+    position: absolute;
+
+    /* 🔥 CENTER FIX */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.95);
+
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.5s;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px;
+}
+
+/* SHOW SIGNUP */
+.main-signup.active {
+    opacity: 1;
+    pointer-events: all;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+
+/* HIDE LOGIN */
+.main-login.hide {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.95);
+    transition: 0.5s;
+}
+
+/* =========================
+   REMOVE DIVIDER SA SIGNUP
+========================= */
+
+.main-login::after {
+  content: "";
+  position: absolute;
+  top: 20%;
+  bottom: 20%;
+  left: 58%;
+  width: 1px;
+  background: rgba(255,255,255,0.08);
+}
+
+/* =========================
+   SIGNUP FORM LAYOUT
+========================= */
+
+/* ROW */
+.signup-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 🔥 equal columns */
+    gap: 12px;
+    margin-top: 12px;
+}
+
+/* EQUAL WIDTH */
+.signup-row input,
+.signup-row .password-wrapper {
+    flex: 1;
+    height: 42px;
+    width: 100%;
+}
+
+/* FIX PASSWORD WRAPPER */
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 45px;
+    width: 100%;
+}
+
+/* INPUT INSIDE PASSWORD */
+.signup-row .password-wrapper input {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding-right: 40px; /* space for eye */
+}
+
+/* INPUT GENERAL FIX */
+.signup-row input {
+    height: 42px;
+    margin: 0;
+}
+
+
+
+/* =========================
+   BUTTON SPACING FIX
+========================= */
+
+.main-signup .login-btn {
+    margin-top: 20px;
+    letter-spacing: 2px;
+
+    width: 30%;   /* adjust mo lang: 50%, 60%, 70% */
+    margin: 20px auto 0;
+    display: block;
+}
+
+/* TEXT ALIGN FIX */
+.main-signup .signup-sub {
+    margin-top: 10px;
+    text-align: center;
+}
+
+
+.main-signup .login-title {
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: -10px; 
+    margin-left:15px;
+}
+
+
+
+/* INPUT GROUP (LABEL + INPUT) */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+/* LABEL STYLE */
+.input-group label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 4px;
+    margin-left: 2px;
+    letter-spacing: 0.5px;
+}
+
+/* FIX HEIGHT ULIT */
+.input-group input,
+.input-group .password-wrapper {
+    height: 42px;
+}
+
+/* ALIGN PASSWORD WRAPPER SA GROUP */
+.input-group .password-wrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+ 
+
+.terms {
+    margin-left: 3px;
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+    align-items: center;
+
+    width: 100%;
+}
+
+/* REMOVE GLOBAL INPUT WIDTH EFFECT */
+.terms input[type="checkbox"] {
+    width: auto !important;
+    margin: 0;
+}
+
+.terms input {
+    cursor: pointer;
+    accent-color: #FFB347;
+}
+
+.terms-link {
+    color: #FFB347;
+    cursor: pointer;
+}
+
+.terms-link:hover {
+    color: #4FC3F7;
+}
+
+
+.player {
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+    
+    width: 200px; /* adjust mo */
+    opacity: 100%;
+
+    pointer-events: none; /* para di makaistorbo sa clicks */
+    z-index: 5; /* above bg, below inputs */
+    filter: drop-shadow(0 15px 20px rgba(255, 170, 80, 0.218));
+    transform: translateY(-15px);
+    filter: drop-shadow(0 25px 35px rgba(255, 170, 80, 0.4));
+}
+
+.player {
+  animation: floatBreath 4s ease-in-out infinite;
+  transform-origin: center;
+}
+
+/* Floating + Breathing animation */
+@keyframes floatBreath {
+  0% {
+    transform: translateY(0px) scale(1);
+  }
+  25% {
+    transform: translateY(-6px) scale(1.01);
+  }
+  50% {
+    transform: translateY(-12px) scale(1.02);
+  }
+  75% {
+    transform: translateY(-6px) scale(1.01);
+  }
+  100% {
+    transform: translateY(0px) scale(1);
+  }
+}
+
+
+.forgot-box {
+    display: none; /* 🔥 hidden muna */
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: white;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(0,0,0,0.5);
+    z-index: 99999; /* 🔥 para ibabaw lahat */
+}
+
+.forgot-content {
+    width: 280px;
+    padding: 20px;
+    border-radius: 10px;
+
+    background: rgb(39, 39, 39);
+    text-align: center;
+}
+
+.forgot-content input {
+    width: 100%;
+    margin: 5px 0;
+    padding: 8px;
+}
+
+.forgot-actions {
+    display: flex;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.forgot-actions button {
+    flex: 1;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.forgot-link {
+    font-size: 12px;
+    color: #888;
+    margin-left: 3px;
+    margin-top: 3px;
+    margin-bottom: 5px;
+    text-align: right;
+
+    cursor: pointer;
+    display: inline-block;
+
+    transition: transform 0.1s ease, color 0.1s ease;
+}
+
+/* 🔥 HOVER = konting laki lang */
+.forgot-link:hover {
+    color: #3ee2ffbb;
+    transform: scale(1.02); /* lalaki konti */
+}
+
+/* 🔥 CLICK = lulubog */
+.forgot-link:active {
+    transform: scale(1) translateY(2px); /* liit + baba */
+    color: #ffffff;
+}
+
+
+.password-matanew {
+    position: relative;
+}
+
+.password-matanew input {
+    width: 100%;
+    padding-right: 35px;
+}
+
+.password-matanew i {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    cursor: pointer;
+    color: #aaa;
+    font-size: 14px;
+}
+
+.password-matanew i:hover {
+    color: #00f2ff;
+}
+
+.password-matanew i {
+    transition: 0.2s ease;
+}
+
+.password-matanew i:active {
+    transform: translateY(-50%) scale(0.9);
+}

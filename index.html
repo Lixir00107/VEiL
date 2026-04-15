@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>VEiL</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="notification.css">
+</head>
+<body>
+
+<canvas id="particleCanvas"></canvas>
+<div class="bg"></div>
+
+<!-- 🔥 LOGIN CONTAINER -->
+<div class="main main-login" id="loginContainer"> 
+    
+
+    
+    <img src="una.png" class="player">
+
+
+    <!-- LEFT -->
+    <div class="left">
+        <span class="logo">VEil</span>
+        <h1>Welcome!</h1>
+        
+        <div class="typing-container">
+            <span id="typewriter-text"></span><span class="cursor">|</span>
+        </div>
+    </div>
+
+    <div class="ai-container">
+        <div class="ai-circle">
+            <img src="veil-logo.png" alt="AI Logo">
+        </div>
+
+        <div class="ai-input-box">
+            <input type="text" id="userInput" placeholder="Ask VEiL...">
+            <button onclick="sendMessage()">➤</button>
+        </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="right">
+        <div class="login-box">
+
+            <h1 class="login-title">Sign In</h1>
+            <!-- 🔥 BINAGO LANG ITO -->
+            <p class="signup-na">
+                Don't have an account?  
+                <span class="signup-link" onclick="openSignup()">Sign Up</span>
+            </p>
+            <input type="text" placeholder="Username or Email" id="username">
+
+            <div class="password-wrapper">
+                <input type="password" placeholder="Password" id="password">
+                <i class="fa-solid fa-eye" id="toggleEye"></i>
+            </div>
+            
+<p class="forgot-link" onclick="openForgot()">
+    Forgot Password?
+</p>
+
+
+
+            <button class="login-btn" onclick="login()">Log In</button>
+
+        </div>
+    </div>
+
+</div>
+
+
+<!-- 🔥 SIGNUP CONTAINER (EMPTY MUNA) -->
+<div class="main main-signup" id="signupContainer">
+    <h2 class="brand">VEil</h2>
+    <h1 class="login-title-secondary" style="text-align:center;">Sign Up</h1>
+
+    <!-- ROW 1 -->
+    <div class="signup-row">
+
+        <div class="input-group">
+            <label>First Name</label>
+            <input type="text" placeholder="Enter first name">
+        </div>
+
+        <div class="input-group">
+            <label>Last Name</label>
+            <input type="text" placeholder="Enter last name">
+        </div>
+
+    </div>
+
+    <!-- ROW 2 -->
+    <div class="signup-row">
+
+        <div class="input-group">
+            <label>Email</label>
+            <input type="email" placeholder="Enter email">
+        </div>
+
+        <div class="input-group">
+            <label>Username</label>
+            <input type="text" placeholder="Create username">
+        </div>
+
+    </div>
+
+    
+<!-- ROW 3 -->
+    <div class="signup-row">
+
+        <div class="input-group">
+            <label>Password</label>
+            <div class="password-wrapper">
+                <input type="password" placeholder="Enter password" id="signupPassword">
+                <i class="fa-solid fa-eye" id="signupEye"></i>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>Confirm Password</label>
+                <div class="password-wrapper">
+                    <input type="password" placeholder="Confirm password" id="confirmPassword">
+                <i class="fa-solid fa-eye" id="confirmEye"></i>
+    </div>
+        </div>
+
+    </div>
+
+<!-- ✅ TERMS (OUTSIDE ROW) -->
+<div class="terms">
+    <input type="checkbox" id="termsCheck">
+    <span>
+        I agree to <span class="terms-link">Terms</span> & 
+        <span class="terms-link">Privacy Policy</span>
+    </span>
+</div>
+
+<!-- BUTTON -->
+<button class="login-btn" onclick="signup()">Create Account</button>
+
+
+    
+
+    <!-- BACK -->
+    <p class="signup-sub" style="text-align:center;">
+        Already have an account? 
+        <span class="signup-link" onclick="openLogin()">Sign In</span>
+    </p>
+
+</div>
+
+<div id="forgotBox" class="forgot-box">
+    <div class="forgot-content">
+        <h3>Reset Password</h3>
+
+        <input type="text" id="fpUser" placeholder="Username or Email">
+        <div class="password-matanew">
+            <input type="password" id="fpNewPass" placeholder="New Password">
+            <i class="fa-solid fa-eye" id="fpEye"></i>
+        </div>
+
+
+        <div class="forgot-actions">
+            <button onclick="submitForgot()">Reset</button>
+            <button onclick="closeForgot()">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+<script src="notification.js"></script>
+
+</body>
+</html>
