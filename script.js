@@ -301,7 +301,17 @@ function sendMessage() {
       msg.includes("hi")
     ) {
       reply = "Hi! I'm VEiL. How can I help you today?";
-    } else {
+    } 
+    else if (msg.includes("maganda ba ako?")||
+      msg.includes("ganda") ||
+      msg.includes("pretty")
+    ) {
+        reply = "Only if you are Kim Jasmine Tolentino.";
+    }
+    else if (msg.includes("pogi")) {
+        reply = "Yes, but it depends on how others see you.";
+    }
+    else {
       reply = "Hmm... I'm still learning";
     }
 
